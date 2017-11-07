@@ -48,7 +48,7 @@ Room r4L2 = new Room(
         title: "room 8",
         description: "This is room eight."
 )
-//Add connections to different rooms
+//Add connections to rooms
 r1L1.connections = ['e':r2L1, 's':r3L1, 'down':r1L2]
 r2L1.connections = ['w':r1L1, 's':r4L1, 'down':r2L2]
 r3L1.connections = ['n':r1L1, 'e':r4L1, 'down':r3L2]
@@ -82,9 +82,14 @@ while(keepPlaying){
         println "Please enter a directions (n, s, e, w)."
     }else {
         Room room = currentRoom.connections.get(userInput)
-        if(room){
+        if(room && userInput == 'down'){
             currentRoom = room
-        } else {
+            invertedMap = !invertedMap
+        }
+        else if(room){
+            currentRoom = room
+        }
+        else {
             println "You can't go that way."
         }
     }
