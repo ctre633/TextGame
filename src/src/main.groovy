@@ -58,37 +58,51 @@ r2L2.connections = ['w':r1L2, 's':r4L2, 'up':r2L1]
 r3L2.connections = ['n':r1L2, 'e':r4L2, 'up':r3L1]
 r4L2.connections = ['n':r2L2, 'w':r3L2, 'up':r4L1]
 
+//Add inverted connections
+
+
 //create variables needed outside of while loop
 Boolean keepPlaying = true
 def currentRoom = r1L1
 Boolean invertedMap = false
 //while loop for game code
-while(keepPlaying){
+while(keepPlaying) {
 
-    //Create a user input
-    BufferedReader br = new BufferedReader(new InputStreamReader(System.in))
-    println "Welcome to $currentRoom.title"
-    println "You see exits to the ${currentRoom.connections.keySet()}"
-    println "Where would you like to go? "
-    def userInput = br.readLine()
+    //Create a user input based on invertedMap
+    if(invertedMap == false){
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in))
+        println "Welcome to $currentRoom.title"
+        println "You see exits to the ${currentRoom.connections.keySet()}"
+        println "Where would you like to go? "
+        def userInput = br.readLine()
+    } else if (invertedMap == true){
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in))
+        println "Welcome to $currentRoom.title"
+        println "You see exits to the ${currentRoom.connectionsInverted.keySet()}"
+        println "Where would you like to go?"
+        def userInput = br.readLine()
+    }
 
     //If statement for exiting the game or incorrect inputs
-    if(userInput == "q"){
+    if (userInput == "q") {
         println "Quitting..."
         keepPlaying = false
-    }else if(!userInput){
+    } else if (!userInput) {
         println "Choice can't be empty. Please try again."
-    }else if(userInput.isInteger()){
+    } else if (userInput.isInteger()) {
         println "Please enter a directions (n, s, e, w)."
-    }else {
+    } else{
         Room room = currentRoom.connections.get(userInput)
-        if(room && userInput == 'down'){
+        //Invert map if player goes through the down door
+        if (room && userInput == 'down') {
             currentRoom = room
             invertedMap = !invertedMap
         }
-        else if(room){
+        //Change currentRoom to room moved to.
+        else if (room) {
             currentRoom = room
         }
+        //Stop user from using non existing path
         else {
             println "You can't go that way."
         }
