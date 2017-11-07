@@ -1,4 +1,5 @@
-Room startRoom = new Room(
+//Create the rooms for the game
+Room roomOne = new Room(
         roomId: 1,
         title: "room 1",
         description: "This is the starting room."
@@ -27,30 +28,41 @@ Room roomFive = new Room(
         title: "room 5",
         description: "This is room five."
 )
+//Add connections to different rooms
+roomOne.connections = ['e':roomThree, 'w':roomTwo]
+roomTwo.connections = ['e':roomOne, 'n':roomFour]
+roomThree.connections = ['w':roomOne, 's':roomFive]
+roomFour.connections = ['s':roomTwo]
+roomFive.connections = ['n':roomThree]
 
-Map<Integer, Room> rooms = [1:startRoom, 2:roomTwo, 3:roomThree, 4:roomFour, 5:roomFive]
-
+//create variables needed outside of while loop
 Boolean keepPlaying = true
+def currentRoom = roomOne
 
+//while loop for game code
 while(keepPlaying){
 
+    //Create a user input
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in))
-    print "Enter room number: "
+    println "Welcome to $currentRoom.title"
+    println "You see exits to the ${currentRoom.connections.keySet()}"
+    println "Where would you like to go? "
     def userInput = br.readLine()
 
+    //If statement for exiting the game or incorrect inputs
     if(userInput == "q"){
         println "Quitting..."
         keepPlaying = false
     }else if(!userInput){
         println "Choice can't be empty. Please try again."
-    }else if(!userInput.isInteger()){
-        println "Please enter a number."
+    }else if(userInput.isInteger()){
+        println "Please enter a directions (n, s, e, w)."
     }else {
-        Room room = rooms.get(userInput as Integer)
+        Room room = currentRoom.connections.get(userInput)
         if(room){
-            println "Welcome to " + room.title
+            currentRoom = room
         } else {
-            println "Sorry, room doesn't exist."
+            println "You can't go that way."
         }
     }
 }
