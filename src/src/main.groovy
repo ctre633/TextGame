@@ -38,6 +38,7 @@ roomFive.connections = ['n':roomThree]
 //create variables needed outside of while loop
 Boolean keepPlaying = true
 def currentRoom = roomOne
+Integer playerHealth = 100
 
 //while loop for game code
 while(keepPlaying){
@@ -53,11 +54,22 @@ while(keepPlaying){
     if(userInput == "q"){
         println "Quitting..."
         keepPlaying = false
-    }else if(!userInput){
+    }
+
+    else if(playerHealth == 0){
+        println "You have died..."
+        keepPlaying = false
+    }
+
+    else if(!userInput){
         println "Choice can't be empty. Please try again."
-    }else if(userInput.isInteger()){
+    }
+
+    else if(userInput.isInteger()){
         println "Please enter a directions (n, s, e, w)."
-    }else {
+    }
+
+    else {
         Room room = currentRoom.connections.get(userInput)
         if(room){
             currentRoom = room
