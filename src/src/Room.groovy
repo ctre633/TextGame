@@ -3,4 +3,5 @@ class Room {
     String title
     String description
     Map connections
+    Boolean hasNpc
 }
