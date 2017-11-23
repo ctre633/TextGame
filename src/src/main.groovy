@@ -1,3 +1,5 @@
+import NPC.Npc
+
 //Create the rooms for the game
 Room roomOne = new Room(
         roomId: 1,
@@ -28,6 +30,51 @@ Room roomFive = new Room(
         title: "room 5",
         description: "This is room five."
 )
+
+//Create NPC's (Monsters) for the game
+Npc commonMonster = new Npc(
+        name: "Epically small monster",
+        health: 100,
+        isAggresive: true,
+        multiplier: 2
+)
+
+Npc rareMonster = new Npc(
+        name: "Epically medium monster",
+        health: 150,
+        isAggressive: true,
+        multiplier: 4
+)
+
+Npc bossMonster = new Npc(
+        name: "Epically epic monster",
+        health: 200,
+        isAggressive: true,
+        multiplier: 6
+)
+
+//Create NPC's(Friendly)
+Npc healer = new Npc(
+        name: "Feels Good Man",
+        health: 100,
+        isAggressive: false,
+        multiplier: 6
+)
+
+Npc justAGuy = new Npc(
+        name: "Just a guy",
+        health: 100,
+        isAggressive: false,
+        multiplier: 4
+)
+
+Npc uselessPerson = new Npc(
+        name: "Basically useless person",
+        health: 100,
+        isAggressive: false,
+        multiplier: 2
+)
+
 //Add connections to different rooms
 roomOne.connections = ['e':roomThree, 'w':roomTwo]
 roomTwo.connections = ['e':roomOne, 'n':roomFour]
