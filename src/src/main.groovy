@@ -82,6 +82,12 @@ roomThree.connections = ['w':roomOne, 's':roomFive]
 roomFour.connections = ['s':roomTwo]
 roomFive.connections = ['n':roomThree]
 
+//Add NPC's to rooms
+roomTwo.npcList = [commonMonster, uselessPerson]
+roomFour.npcList = [commonMonster, rareMonster, justAGuy]
+roomThree.npcList = [commonMonster, uselessPerson]
+roomFive.npcList = [commonMonster, rareMonster, justAGuy]
+
 //create variables needed outside of while loop
 Boolean keepPlaying = true
 def currentRoom = roomOne
