@@ -1,4 +1,5 @@
 import NPC.Npc
+import java.util.Random
 
 //Create the rooms for the game
 Room roomOne = new Room(
@@ -35,7 +36,7 @@ Room roomFive = new Room(
 Npc commonMonster = new Npc(
         name: "Epically small monster",
         health: 100,
-        isAggresive: true,
+        isAggressive: true,
         multiplier: 2
 )
 
@@ -83,15 +84,17 @@ roomFour.connections = ['s':roomTwo]
 roomFive.connections = ['n':roomThree]
 
 //Add NPC's to rooms
-roomTwo.npcList = [commonMonster, uselessPerson]
-roomFour.npcList = [commonMonster, rareMonster, justAGuy]
-roomThree.npcList = [commonMonster, uselessPerson]
-roomFive.npcList = [commonMonster, rareMonster, justAGuy]
+roomTwo.npcList = [commonMonster,]
+roomFour.npcList = [commonMonster,]
+roomThree.npcList = [commonMonster,]
+roomFive.npcList = [commonMonster,]
 
 //create variables needed outside of while loop
 Boolean keepPlaying = true
 def currentRoom = roomOne
 Integer playerHealth = 100
+
+//Create random number generator
 
 //while loop for game code
 while(keepPlaying){
@@ -126,6 +129,18 @@ while(keepPlaying){
         Room room = currentRoom.connections.get(userInput)
         if(room){
             currentRoom = room
+            //Create random number
+            Random rand = new Random()
+            int max = 10
+            int randomDamage
+            (1..10).each{
+                randomDamage = rand.nextInt(max) + 1
+            }
+            if(randomDamage.toBigInteger().mod(2) == 0){
+                int totalDamage = randomDamage * room.getNpcList().multiplier
+                playerHealth = playerHealth - totalDamage
+                println "You have been attacked! You now have $playerHealth health"
+            }
         } else {
             println "You can't go that way."
         }
