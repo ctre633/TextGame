@@ -1,34 +1,33 @@
 import NPC.Npc
-import java.util.Random
 
 //Create the rooms for the game
 Room roomOne = new Room(
         roomId: 1,
-        title: "room 1",
+        title: "The Starting room",
         description: "This is the starting room."
 )
 
 Room roomTwo = new Room(
         roomId: 2,
-        title: "room 2",
+        title: "An Interesting Room",
         description: "This is room two."
 )
 
 Room roomThree = new Room(
         roomId: 3,
-        title: "room 3",
+        title: "An Even more interesting room",
         description: "This is room three."
 )
 
 Room roomFour = new Room(
         roomId: 4,
-        title: "room 4",
+        title: "A Dirty room",
         description: "This is room four."
 )
 
 Room roomFive = new Room(
         roomId: 5,
-        title: "room 5",
+        title: "A Clean room",
         description: "This is room five."
 )
 
@@ -88,6 +87,7 @@ roomTwo.npcList = [commonMonster,]
 roomFour.npcList = [commonMonster,]
 roomThree.npcList = [commonMonster,]
 roomFive.npcList = [commonMonster,]
+roomOne.npcList = [commonMonster,]
 
 //create variables needed outside of while loop
 Boolean keepPlaying = true
@@ -102,6 +102,7 @@ while(keepPlaying){
     //Create a user input
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in))
     println "Welcome to $currentRoom.title"
+    println "You currently have $playerHealth health."
     println "You see exits to the ${currentRoom.connections.keySet()}"
     println "Where would you like to go? "
     def userInput = br.readLine()
@@ -124,11 +125,14 @@ while(keepPlaying){
     else if(userInput.isInteger()){
         println "Please enter a directions (n, s, e, w)."
     }
+    //End game if health reaches 0
+    else if(playerHealth <= 0){}
 
     else {
         Room room = currentRoom.connections.get(userInput)
         if(room){
             currentRoom = room
+            println "Be careful, you see ${room.getNpcList().name}!"
             //Create random number
             Random rand = new Random()
             int max = 10
@@ -136,10 +140,21 @@ while(keepPlaying){
             (1..10).each{
                 randomDamage = rand.nextInt(max) + 1
             }
-            if(randomDamage.toBigInteger().mod(2) == 0){
+            //Damage player if random number is even
+            if(randomDamage.toBigInteger().mod(2) == 0 && room.npcList){
                 int totalDamage = randomDamage * room.getNpcList().multiplier
                 playerHealth = playerHealth - totalDamage
                 println "You have been attacked! You now have $playerHealth health"
+            }
+            //Heal player if random number is odd
+            else if (room.npcList){
+                int healing = randomDamage * room.getNpcList().multiplier
+                playerHealth = playerHealth + healing
+                //Reset health to zero if it goes over 100
+                if(playerHealth >= 100){
+                    playerHealth = 100
+                }
+                println "You siphon the life of your foes. You gain $healing health."
             }
         } else {
             println "You can't go that way."
