@@ -83,7 +83,7 @@ roomFour.connections = ['s':roomTwo]
 roomFive.connections = ['n':roomThree]
 
 //Add NPC's to rooms
-roomTwo.npcList = [commonMonster,]
+roomTwo.npcList = [commonMonster,rareMonster]
 roomFour.npcList = [commonMonster,]
 roomThree.npcList = [commonMonster,]
 roomFive.npcList = [commonMonster,]
@@ -143,13 +143,13 @@ while(keepPlaying){
             }
             //Damage player if random number is even
             if(randomDamage.toBigInteger().mod(2) == 0 && room.npcList){
-                int totalDamage = randomDamage * room.getNpcList().multiplier
+                int totalDamage = randomDamage * room.getNpcList().multiplier.sum()
                 playerHealth = playerHealth - totalDamage
                 println "You have been attacked! You now have $playerHealth health"
             }
             //Heal player if random number is odd
             else if (room.npcList){
-                int healing = randomDamage * room.getNpcList().multiplier
+                int healing = randomDamage * room.getNpcList().multiplier.sum()
                 playerHealth = playerHealth + healing
                 //Reset health to zero if it goes over 100
                 if(playerHealth >= 100){
