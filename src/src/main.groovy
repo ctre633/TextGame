@@ -84,9 +84,9 @@ roomFive.connections = ['n':roomThree]
 
 //Add NPC's to rooms
 roomTwo.npcList = [commonMonster,rareMonster]
-roomFour.npcList = [commonMonster,]
-roomThree.npcList = [commonMonster,]
-roomFive.npcList = [commonMonster,]
+roomFour.npcList = [commonMonster,bossMonster]
+roomThree.npcList = [commonMonster,rareMonster]
+roomFive.npcList = [commonMonster,bossMonster]
 roomOne.npcList = [commonMonster,]
 
 //create variables needed outside of while loop
