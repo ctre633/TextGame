@@ -132,6 +132,7 @@ while(keepPlaying){
         Room room = currentRoom.connections.get(userInput)
         if(room){
             currentRoom = room
+            //display list of npc's in the room.
             println "Be careful, you see ${room.getNpcList().name}!"
             //Create random number
             Random rand = new Random()
