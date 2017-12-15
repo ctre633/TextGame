@@ -125,8 +125,6 @@ while(keepPlaying){
     else if(userInput.isInteger()){
         println "Please enter a directions (n, s, e, w)."
     }
-    //End game if health reaches 0
-    else if(playerHealth <= 0){}
 
     else {
         Room room = currentRoom.connections.get(userInput)
@@ -146,6 +144,10 @@ while(keepPlaying){
                 int totalDamage = randomDamage * room.getNpcList().multiplier
                 playerHealth = playerHealth - totalDamage
                 println "You have been attacked! You now have $playerHealth health"
+                if (playerHealth <= 0){
+                    println "You have died..."
+                    keepPlaying = false
+                }
             }
             //Heal player if random number is odd
             else if (room.npcList){
